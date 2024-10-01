@@ -25,7 +25,7 @@ public class Request {
     @Size(max = 32)
     private String operationUid;
 
-    private Systems systemName;
+    private String systemName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime systemTime;
@@ -39,19 +39,5 @@ public class Request {
     private int templateId;
     private int productCode;
     private int smsCode;
-    @Override
-    public String toString() {
-        return "{" +
-                "uid='" + uid + '\'' +
-                ", operationUid='" + operationUid + '\'' +
-                ", systemName='" + systemName + '\'' +
-                ", systemTime='" + systemTime + '\'' +
-                ", source='" + source + '\'' +
-                ", communicationId=" + communicationId +
-                ", templateId=" + templateId +
-                ", productCode=" + productCode +
-                ", smsCode=" + smsCode +
-                '}';
-    }
 
 }
