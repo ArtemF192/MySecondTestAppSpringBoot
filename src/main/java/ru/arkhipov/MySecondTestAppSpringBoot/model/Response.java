@@ -11,11 +11,8 @@ import java.time.LocalDateTime;
 public class Response {
     private String uid;
     private String operationUid;
-
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private LocalDateTime systemTime;
-
-    private String code;
-    private String errorCode;
-    private String errorMessage;
+    private String systemTime;
+    private Codes code;
+    private ErrorCodes errorCode;
+    private ErrorMessages errorMessage;
 }
