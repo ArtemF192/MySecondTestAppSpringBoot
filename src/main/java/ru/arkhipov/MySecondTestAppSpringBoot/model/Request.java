@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.swing.text.Position;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,26 +18,27 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Request {
-    @NotBlank
-    @Size(max = 32)
-    private String uid;
+    @NotBlank(message = "UID не может быть пустым")
+    private String uid; // Уникальный идентификатор сообщение
 
-    @NotBlank
-    @Size(max = 32)
-    private String operationUid;
 
-    private String systemName;
-    private String systemTime;
+    private String operationUid; // Уникальный идентификатор операции
 
-    private String source;
+    private Systems systemName; // Имя системы отправителя
+    private String systemTime; // Время создания сообщения
 
-    @Min(1)
-    @Max(100000)
-    private int communicationId;
+    private String source; // Наименование ресурса
+    private Positions position; // Должность
+    private Double salary; // Зарплата
+    private Double bonus; // Бонус
+    private Integer workDays; // Кол-во рабочих дней
 
-    private int templateId;
-    private int productCode;
-    private int smsCode;
+
+    private Integer communicationId; // Уникальный идентификатор коммуникации
+
+    private Integer templateId; // Уникальный идентификатор шаблона
+    private Integer productCode; // Код продукта
+    private Integer smsCode; // Смс код
 
     @Override
     public String toString() {
