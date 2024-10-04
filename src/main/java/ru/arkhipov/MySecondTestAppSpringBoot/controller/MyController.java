@@ -15,7 +15,9 @@ import ru.arkhipov.MySecondTestAppSpringBoot.service.ModifyResponseService;
 import ru.arkhipov.MySecondTestAppSpringBoot.service.ValidationService;
 import ru.arkhipov.MySecondTestAppSpringBoot.util.DateTimeUtil;
 
-import java.time.LocalDateTime;
+
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 
 
@@ -23,12 +25,16 @@ import java.util.Date;
 @RestController
 public class MyController {
     private final ValidationService validationService;
-    private final ModifyResponseService modifyResponseService;
+    private final ModifyResponseService modifyResponseService1;
+    private final ModifyResponseService modifyResponseService2;
+
     @Autowired
     public MyController(ValidationService validationService,
-                        @Qualifier("ModifySystemTimeResponseService") ModifyResponseService modifyResponseService) {
+                        @Qualifier("ModifySystemTimeResponseService") ModifyResponseService modifyResponseService1,
+                        @Qualifier("ModifyOperationUidResponseService") ModifyResponseService modifyResponseService2) {
         this.validationService = validationService;
-        this.modifyResponseService = modifyResponseService;
+        this.modifyResponseService1 = modifyResponseService1;
+        this.modifyResponseService2 = modifyResponseService2;
     }
 
     @RequestMapping(value = "/feedback", method = {RequestMethod.GET, RequestMethod.POST})
@@ -69,7 +75,21 @@ public class MyController {
             e.printStackTrace();
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        modifyResponseService.modify(response);
+        response = modifyResponseService1.modify(response);
+        response = modifyResponseService2.modify(response);
+
+        log.info("response: {}", response);
+
+        DateFormat dateFormat = DateTimeUtil.getCustomFormat();
+        try {
+            Date date1 = dateFormat.parse(request.getSystemTime());
+            Date date2 = new Date();
+            long dt = date2.getTime() - date1.getTime();
+            log.info("Time since user sent request (ms): {}", dt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -25,11 +25,8 @@ public class Request {
     @Size(max = 32)
     private String operationUid;
 
-    private Systems systemName;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private LocalDateTime systemTime;
-
+    private String systemName;
+    private String systemTime;
     private String source;
 
     @Min(1)
